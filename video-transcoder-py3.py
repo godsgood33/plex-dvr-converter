@@ -7,7 +7,7 @@ import glob
 import ffmpy
 
 def create_arg_parser():
-    """"Creates and returns the ArgumentParser object."""
+    """Creates and returns the ArgumentParser object."""
 
     parser = argparse.ArgumentParser(description='This script allows you to find all .ts files in the inputDirectory and convert them to mp4 files using ffmpeg')
     parser.add_argument('inputDirectory',
@@ -25,7 +25,7 @@ def transcode_file(inputFile):
         inputs={inputFile: None},
         outputs={outputFile: '-c:v libx264 -strict -2'},
     )
-    print ff.cmd
+    print(ff.cmd)  # Updated to use parentheses
     ff.run()
 
 def check_file(inputFile, deleteOriginal):
@@ -38,13 +38,13 @@ def check_file(inputFile, deleteOriginal):
     size_max = ofs * 1.2
 
     if (tfs < size_min) or (tfs > size_max):
-        print "Transcoded file not within reasonable size limits"
-        print "Transcoded file size: " + tfs + " bytes"
-        print "Limits:\nMin: " + size_min + "\nMax: " + size_max
-        print "Original file size: " + ofs + " bytes"
+        print("Transcoded file not within reasonable size limits")
+        print("Transcoded file size: " + str(tfs) + " bytes")
+        print("Limits:\nMin: " + str(size_min) + "\nMax: " + str(size_max))
+        print("Original file size: " + str(ofs) + " bytes")
         os._exit(1)
     elif tfs >= size_min and tfs <= size_max:
-        print "Transcoded file within reasonable size limits"
+        print("Transcoded file within reasonable size limits")
         if deleteOriginal:
             os.remove(inputFile)
 
